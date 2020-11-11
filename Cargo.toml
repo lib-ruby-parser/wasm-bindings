@@ -9,5 +9,5 @@ version = "0.1.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-lib-ruby-parser = "0.1.0"
+lib-ruby-parser = "0.2.0"
 wasm-bindgen = "0.2"
