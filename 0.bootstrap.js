@@ -43,7 +43,7 @@ eval("\"use strict\";\n// Instantiate WebAssembly module\nvar wasmExports = __we
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var wasm_bindings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! wasm-bindings */ \"../pkg/wasm_bindings.js\");\n\n\nconsole.log(wasm_bindings__WEBPACK_IMPORTED_MODULE_0__[\"js_parse\"](\"2 + 2\"));\n\nlet input = document.getElementById(\"input\");\nlet output = document.getElementById(\"output\");\n\ninput.onkeyup = () => {\n    output.value = wasm_bindings__WEBPACK_IMPORTED_MODULE_0__[\"js_parse\"](input.value);\n}\n\n\n//# sourceURL=webpack:///./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var wasm_bindings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! wasm-bindings */ \"../pkg/wasm_bindings.js\");\n\n\nconsole.log(wasm_bindings__WEBPACK_IMPORTED_MODULE_0__[\"js_parse\"](\"2 + 2\"));\n\nlet input = document.getElementById(\"input\");\nlet output = document.getElementById(\"output\");\n\nlet parse = () => {\n    output.value = wasm_bindings__WEBPACK_IMPORTED_MODULE_0__[\"js_parse\"](input.value);\n}\n\ninput.onkeyup = parse;\nparse();\n\n\n//# sourceURL=webpack:///./index.js?");
 
 /***/ }),
 
