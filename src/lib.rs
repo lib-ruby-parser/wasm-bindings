@@ -10,13 +10,14 @@ fn parse(input: &str) -> Result<String, String> {
         ..Default::default()
     };
 
-    let mut parser = Parser::new(input.as_bytes(), params).map_err(|err| err.to_string())?;
+    let parser = Parser::new(input.as_bytes(), params);
     let ParserResult {
         ast,
         diagnostics,
         tokens,
         comments,
         magic_comments,
+        input,
     } = parser.do_parse();
 
     let output = format!(
@@ -44,7 +45,7 @@ Magic comments:
         diagnostics = diagnostics
             .iter()
             .map(|d| d
-                .render()
+                .render(&input)
                 .unwrap_or_else(|| "<failed to render diagnostic>".to_owned()))
             .collect::<Vec<_>>()
             .join("\n"),
