@@ -1,2 +1,11 @@
-/target
+target
+node_modules
+yarn.lock
 Cargo.lock
+.parcel-cache
+
+# codegen
+js/nodes.js
+js/messages.js
+bindings/src/nodes.rs
+bindings/src/messages.rs

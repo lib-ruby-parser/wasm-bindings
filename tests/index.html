@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript">
+        console.log("Page load start");
+    </script>
+    <script type="text/javascript" src="no-modules/lib_ruby_parser.js"></script>
+    <script type="text/javascript">
+        console.log("Starting loading WASM...");
+        LibRubyParser.onLoad(() => {
+            console.log("WASM loaded");
+            window.output = LibRubyParser.parse("2 + 2", "one.rb");
+            document.output = window.output;
+            console.log(output);
+            console.log("Available as global variable `output`");
+            console.log("Page load end");
+        });
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
