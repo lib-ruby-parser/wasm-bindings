@@ -10,14 +10,11 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  test:
-    name: run tests
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        rust: [stable, beta, nightly]
+  test-web:
+    name: test in browser
+    runs-on: ubuntu-latest
+    env:
+      TARGET: no-modules
 
     steps:
       - name: checkout
@@ -27,8 +24,47 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: ${{ matrix.rust }}
+          toolchain: stable
           override: true
 
+      - name: install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+
+      - name: install puppeteer
+        run: yarn install
+
+      - name: install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
       - name: test
-        run: cargo test
+        run: make tests/no-modules
+
+  test-node:
+    name: test with node
+    runs-on: ubuntu-latest
+    env:
+      TARGET: nodejs
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+
+      - name: install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: test
+        run: make tests/nodejs
