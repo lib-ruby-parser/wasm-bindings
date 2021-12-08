@@ -1,32 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Hello wasm-pack!</title>
-  <style>
-    textarea {
-      width: 49%;
-      min-height: 800px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>WASM bindings demo</title>
+    <script type="text/javascript" src="lib-ruby-parser.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <style>
+        #header {
+            text-align: center;
+        }
+
+        textarea {
+            width: 45%;
+            height: 500px
+        }
+
+        #input-field {
+            float: left
+        }
+
+        #output-field {
+            float: right;
+        }
+
+        pre {
+            display: inline;
+            padding-left: 20px;
+        }
+    </style>
 </head>
 
 <body>
-  <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
-  <script src="./bootstrap.js"></script>
-
-  <textarea id="input">
-class A
-  def foo(a)
-    a + 42
-  end
-end
-  </textarea>
-
-  <textarea id="output">
-    # Output
-  </textarea>
+    <h3 id="header">
+        Input on the left, output on the right.<br />
+        Parsed value is available in console as
+        <pre>window.output</pre>
+    </h3>
+    <textarea id="input-field">2 + 2</textarea>
+    <textarea id="output-field"></textarea>
 </body>
 
 </html>
