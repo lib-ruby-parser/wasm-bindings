@@ -2,7 +2,7 @@ name: test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ _disable ]
 
 env:
   CARGO_TERM_COLOR: always
