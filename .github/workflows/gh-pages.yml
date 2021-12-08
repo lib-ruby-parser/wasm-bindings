@@ -2,7 +2,7 @@ name: test
 
 on:
   push:
-    branches: [ _disable ]
+    branches: [ master ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -11,14 +11,12 @@ jobs:
   test:
     name: build gh pages
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
+    env:
+      TARGET: no-modules
 
     steps:
       - name: checkout
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false
 
       - name: install rust
         uses: actions-rs/toolchain@v1
@@ -27,23 +25,22 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+
+      - name: install puppeteer
+        run: yarn install
+
       - name: install wasm-pack
-        run: cargo install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
-      - name: build pkg
-        run: wasm-pack build --dev
-
-      - name: build web
-        run: |
-          cd web
-          npm install
-          npm run build
+      - name: build
+        run: make gh-pages/build
 
       - name: deploy
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.PUSH_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: web/dist # The folder the action should deploy.
-          CLEAN: true # Automatically remove deleted files from the deploy branch
-
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages

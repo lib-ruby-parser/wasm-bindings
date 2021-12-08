@@ -21,7 +21,6 @@ root.onLoad = function(cb) {
 }
 const lib_ruby_parser_wasm_url = document.currentScript.src.replace(/\.js$/, '.wasm');
 wasm_bindgen(lib_ruby_parser_wasm_url).then(() => {
-    console.log("Loaded");
     loaded = true;
     onLoadCallbacks.forEach(cb => cb());
     onLoadCallbacks = [];
