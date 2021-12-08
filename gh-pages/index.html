@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WASM bindings demo</title>
+    <script type="text/javascript" src="lib-ruby-parser.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <style>
+        #header {
+            text-align: center;
+        }
+
+        textarea {
+            width: 45%;
+            height: 500px
+        }
+
+        #input-field {
+            float: left
+        }
+
+        #output-field {
+            float: right;
+        }
+
+        pre {
+            display: inline;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3 id="header">
+        Input on the left, output on the right.<br />
+        Parsed value is available in console as
+        <pre>window.output</pre>
+    </h3>
+    <textarea id="input-field">2 + 2</textarea>
+    <textarea id="output-field"></textarea>
+</body>
+
+</html>
