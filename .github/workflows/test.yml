@@ -12,59 +12,16 @@ env:
 jobs:
   test-web:
     name: test in browser
-    runs-on: ubuntu-latest
-    env:
-      TARGET: no-modules
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
-      - name: install rust
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - name: install node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '15'
-
-      - name: install puppeteer
-        run: yarn install
-
-      - name: install wasm-pack
-        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-
-      - name: test
-        run: make tests/no-modules
+    uses: lib-ruby-parser/wasm-bindings/.github/workflows/shared-build-and-test.yml@master
+    with:
+      node: '15'
+      target: no-modules
+      env: web
 
   test-node:
     name: test with node
-    runs-on: ubuntu-latest
-    env:
-      TARGET: nodejs
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
-      - name: install rust
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - name: install node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '15'
-
-      - name: install wasm-pack
-        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-
-      - name: test
-        run: make tests/nodejs
+    uses: lib-ruby-parser/wasm-bindings/.github/workflows/shared-build-and-test.yml@master
+    with:
+      node: '15'
+      target: nodejs
+      env: nodejs

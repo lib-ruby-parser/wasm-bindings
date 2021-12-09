@@ -1,0 +1,66 @@
+# This is a shared workflow
+
+name: build-and-test
+
+on:
+  workflow_call:
+    inputs:
+      node:
+        description: node version
+        type: string
+        required: true
+      target:
+        description: target to build (nodejs or no-modules)
+        type: string
+        required: true
+      env:
+        description: dylib to upload
+        type: string
+        required: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-and-test:
+    name: build and upload ${{ inputs.target }}
+    runs-on: ubuntu-latest
+    env:
+      TARGET: ${{ inputs.target }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ inputs.node }}
+
+      - name: install puppeteer
+        run: yarn install
+
+      - name: install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: test
+        run: make tests/${{ inputs.target }}
+
+      - name: upload wasm file
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ inputs.env }}-lib-ruby-parser.wasm
+          path: build/${{ inputs.env }}-lib-ruby-parser.wasm
+
+      - name: upload js file
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ inputs.env }}-lib-ruby-parser.js
+          path: build/${{ inputs.env }}-lib-ruby-parser.js
