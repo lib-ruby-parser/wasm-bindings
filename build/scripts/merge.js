@@ -1,13 +1,13 @@
 const fs = require('fs');
-const TARGET = process.env.TARGET;
+const ENV = process.env.ENV;
 
-const wrapper_src = fs.readFileSync(`./build/${TARGET}/lib_ruby_parser_wrapper.js`).toString().replace('lib_ruby_parser_wasm_bg', 'lib_ruby_parser');
+const wrapper_src = fs.readFileSync(`./build/${ENV}-lib-ruby-parser-wrapper.js`).toString().replace('lib_ruby_parser_wasm_bg', `${ENV}-lib-ruby-parser`);
 const types_src = fs.readFileSync('./js/types.js').toString();
 const nodes_src = fs.readFileSync('./js/nodes.js').toString();
 const messages_src = fs.readFileSync('./js/messages.js').toString();
 
 let POST_INIT;
-if (TARGET == 'no-modules') {
+if (ENV == 'web') {
     POST_INIT = `
 root.parse = wasm_bindgen.parse;
 let onLoadCallbacks = [];
@@ -60,4 +60,4 @@ ${POST_INIT}
 ${FOOTER}
 `
 
-fs.writeFileSync(`./build/${TARGET}/lib_ruby_parser.js`, output);
+fs.writeFileSync(`./build/${ENV}-lib-ruby-parser.js`, output);

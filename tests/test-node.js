@@ -1,4 +1,4 @@
-const LibRubyParser = require('../build/nodejs/lib_ruby_parser.js');
+const LibRubyParser = require('../build/nodejs-lib-ruby-parser.js');
 const assert = require('assert').strict;
 
 function test_ast() {

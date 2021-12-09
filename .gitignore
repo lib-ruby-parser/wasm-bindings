@@ -2,14 +2,19 @@ target
 node_modules
 yarn.lock
 Cargo.lock
-.parcel-cache
 *.wasm
 
-# codegen
+# Rust codegen
 js/nodes.js
 js/messages.js
 bindings/src/nodes.rs
 bindings/src/messages.rs
+
+# Build files
+build/web-lib-ruby-parser-wrapper.js
+build/web-lib-ruby-parser.js
+build/nodejs-lib-ruby-parser-wrapper.js
+build/nodejs-lib-ruby-parser.js
 
 # gh pages
 gh-pages/lib-ruby-parser.js
