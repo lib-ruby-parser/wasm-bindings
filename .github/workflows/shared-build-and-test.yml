@@ -24,7 +24,7 @@ defaults:
 
 jobs:
   build-and-test:
-    name: build and upload ${{ inputs.target }}
+    name: build, test and upload ${{ inputs.target }}
     runs-on: ubuntu-latest
     env:
       TARGET: ${{ inputs.target }}

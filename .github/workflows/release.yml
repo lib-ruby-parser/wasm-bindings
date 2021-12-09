@@ -1,0 +1,56 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-web:
+    name: build web
+    uses: lib-ruby-parser/wasm-bindings/.github/workflows/shared-build-and-test.yml@master
+    with:
+      node: '15'
+      target: no-modules
+      env: web
+
+  build-node:
+    name: build node
+    uses: lib-ruby-parser/wasm-bindings/.github/workflows/shared-build-and-test.yml@master
+    with:
+      node: '15'
+      target: nodejs
+      env: nodejs
+
+  create-release:
+    needs: ['build-web', 'build-node']
+    name: create release
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with: { name: web-lib-ruby-parser.js }
+      - uses: actions/download-artifact@v2
+        with: { name: web-lib-ruby-parser.wasm }
+      - uses: actions/download-artifact@v2
+        with: { name: nodejs-lib-ruby-parser.js }
+      - uses: actions/download-artifact@v2
+        with: { name: nodejs-lib-ruby-parser.wasm }
+
+      - name: show artifacts
+        run: ls -l
+
+      - name: release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          artifacts: "web-lib-ruby-parser.*,nodejs-lib-ruby-parser.*"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
