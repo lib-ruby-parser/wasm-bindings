@@ -1,5 +1,5 @@
-tests/no-modules: build/no-modules/lib_ruby_parser.js
+tests/no-modules: build/web-lib-ruby-parser.js
 	node tests/test-web.js
 
-tests/nodejs: build/nodejs/lib_ruby_parser.js
+tests/nodejs: build/nodejs-lib-ruby-parser.js
 	node tests/test-node.js

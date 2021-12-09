@@ -1,8 +1,8 @@
-gh-pages/lib-ruby-parser.js: build/no-modules/lib_ruby_parser.js
+gh-pages/lib-ruby-parser.js: build/web-lib-ruby-parser.js
 	cp $< $@
 CLEAN += gh-pages/lib-ruby-parser.js
 
-gh-pages/lib-ruby-parser.wasm: build/no-modules/lib_ruby_parser.wasm
+gh-pages/lib-ruby-parser.wasm: build/web-lib-ruby-parser.wasm
 	cp $< $@
 CLEAN += gh-pages/lib-ruby-parser.wasm
 
