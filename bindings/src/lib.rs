@@ -352,6 +352,7 @@ pub fn parse(
     buffer_name: Option<String>,
     decoder: js_sys::Function,
 ) -> JsParserResult {
+    // let start = lib_ruby_parser__now();
     let options = RustParserOptions {
         buffer_name: buffer_name.unwrap_or_else(|| String::from("(eval)")),
         decoder: fn_based_decoder(decoder),
@@ -360,6 +361,18 @@ pub fn parse(
     };
     let parser = RustParser::new(input, options);
     let output = parser.do_parse();
+    // let end = lib_ruby_parser__now();
+    // log(&format!("Parsing took {:.10}", end - start));
 
-    output.into_js()
+    // let start = lib_ruby_parser__now();
+    let output = output.into_js();
+    // let end = lib_ruby_parser__now();
+    // log(&format!("Conversion took {:.10}", end - start));
+
+    output
+}
+
+#[wasm_bindgen]
+extern "C" {
+    fn lib_ruby_parser__now() -> f64;
 }

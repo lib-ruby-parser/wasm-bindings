@@ -85,3 +85,7 @@ root.MagicComment = MagicComment;
 root.DecodedInput = DecodedInput;
 root.SourceLine = SourceLine;
 root.ParserResult = ParserResult;
+
+function lib_ruby_parser__now() {
+    return performance.now();
+}

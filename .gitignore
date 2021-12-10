@@ -18,3 +18,11 @@ build/nodejs-lib-ruby-parser.js
 
 # gh pages
 gh-pages/lib-ruby-parser.js
+
+# benchmark assets
+benchmark/repos
+benchmark/filelist
+benchmark/repos.zip
+benchmark/ruby-parser.rb
+benchmark/rust-parser
+benchmark/stats
