@@ -23,7 +23,7 @@ endif
 $(info TARGET = $(TARGET))
 
 RUN_WASM_PACK = cd bindings && \
-	wasm-pack build --target $(TARGET) && \
+	wasm-pack build --release --target $(TARGET) && \
 	cd .. && \
 	cp bindings/pkg/lib_ruby_parser_wasm.js build/$(ENV)-lib-ruby-parser-wrapper.js && \
 	cp bindings/pkg/lib_ruby_parser_wasm_bg.wasm build/$(ENV)-lib-ruby-parser.wasm
