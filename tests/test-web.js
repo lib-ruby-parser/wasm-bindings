@@ -1,45 +1,8 @@
 const puppeteer = require('puppeteer');
-const http = require('http');
-var fs = require('fs');
-var path = require('path');
 const assert = require('assert').strict;
+const { startServer, stopServer } = require('./server');
 
-const server = http.createServer((req, res) => {
-    console.log(`req.url = ${req.url}`);
-    let filePath;
-    if (req.url === '/' || req.url == '/favicon.ico') {
-        filePath = './tests/index.html';
-    } else {
-        filePath = './build' + req.url;
-    }
-
-    let extname = path.extname(filePath);
-    let contentType;
-    switch (extname) {
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.wasm':
-            contentType = 'application/wasm'
-            break;
-        case '.html':
-        case '.ico':
-            contentType = 'text/html';
-            break;
-        default:
-            throw `Unsupported extension ${extname}`;
-    }
-
-    console.log(`returning file ${filePath} with content-type ${contentType}`);
-    fs.readFile(filePath, (err, content) => {
-        if (err) {
-            throw err;
-        }
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(content, 'utf-8');
-    });
-});
-server.listen(8080);
+startServer({ port: 8080, logging: true });
 
 function sleep(ms) {
     return new Promise((res, rej) => {
@@ -70,7 +33,7 @@ async function runTest() {
 }
 
 setTimeout(() => {
-    server.close();
+    stopServer();
     console.log("Timeout, exiting...");
     process.exit(1);
 }, 10000);
@@ -78,6 +41,6 @@ setTimeout(() => {
 (async () => {
     await runTest();
     console.log("OK.");
-    server.close();
+    stopServer();
     process.exit(0);
 })();

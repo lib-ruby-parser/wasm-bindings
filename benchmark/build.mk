@@ -36,8 +36,9 @@ benchmark/compare:
 	$(call run_benchmark, ./rust-parser)
 	$(call run_benchmark, ruby ruby-parser.rb)
 	$(call run_benchmark, NODE_DISABLE_COLORS=1 node node-wasm-parser.js)
+	$(call run_benchmark, NODE_DISABLE_COLORS=1 node web-wasm-parser.js)
 
-BENCHMARK_RECORDING = $(TARGET).benchmark-out
+BENCHMARK_RECORDING = benchmark-out
 benchmark/record:
 	echo "Rust:" > $(BENCHMARK_RECORDING)
 	$(call run_benchmark, ./rust-parser >> ../$(BENCHMARK_RECORDING))
@@ -45,3 +46,5 @@ benchmark/record:
 	$(call run_benchmark, ruby ruby-parser.rb >> ../$(BENCHMARK_RECORDING))
 	echo "WASM (Node.js):" >> $(BENCHMARK_RECORDING)
 	$(call run_benchmark, NODE_DISABLE_COLORS=1 node node-wasm-parser.js >> ../$(BENCHMARK_RECORDING))
+	echo "WASM (Headless Chrome):" >> $(BENCHMARK_RECORDING)
+	$(call run_benchmark, NODE_DISABLE_COLORS=1 node web-wasm-parser.js >> ../$(BENCHMARK_RECORDING))

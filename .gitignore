@@ -26,3 +26,4 @@ benchmark/repos.zip
 benchmark/ruby-parser.rb
 benchmark/rust-parser
 benchmark/stats
+benchmark-out
