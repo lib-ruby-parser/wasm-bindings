@@ -6,9 +6,12 @@ let server = null;
 
 const root = path.join(__filename, '../..');
 
-function startServer(port) {
+function startServer(options = {}) {
+    const log = options.logging ? console.log : () => { };
+    log(options);
+    const port = options.port || 8080;
     server = http.createServer((req, res) => {
-        console.log(`req.url = ${req.url}`);
+        log(`req.url = ${req.url}`);
         let filePath;
         if (req.url === '/' || req.url == '/favicon.ico') {
             filePath = path.join(root, 'tests/index.html');
@@ -33,7 +36,7 @@ function startServer(port) {
                 throw `Unsupported extension ${extname}`;
         }
 
-        console.log(`returning file ${filePath} with content-type ${contentType}`);
+        log(`returning file ${filePath} with content-type ${contentType}`);
         fs.readFile(filePath, (err, content) => {
             if (err) {
                 throw err;

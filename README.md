@@ -74,3 +74,35 @@ const parserResult = LibRubyParser.parse('2 + 2', null, decoder);
 To return decoded input simply `return` a new `Uint8Array` array.
 
 To return decoding error simply `throw` a string with message (that you'll later get back in `.diagnostics` list).
+
+## Benchmarks
+
+Results recoded on 10 Dec 2021:
+
+```
+Rust:
+1.7832756400
+Ruby:
+4.865621000062674
+WASM (Node.js):
+9.535977154970169
+WASM (Headless Chrome):
+7.8802999999523164
+```
+
+To run it locally make sure to compile and test Node.js and web versions:
+
+```
+$ TARGET=no-modules make tests/no-modules
+$ TARGET=nodejs make tests/nodejs
+```
+
+and run benchmarks:
+
+```
+$ make benchmark/compare
+# prints to stdout
+
+$ make benchmark/record
+# prints to ./benchmark-out file
+```

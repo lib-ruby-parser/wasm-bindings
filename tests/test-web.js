@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const assert = require('assert').strict;
 const { startServer, stopServer } = require('./server');
 
-startServer(8080);
+startServer({ port: 8080, logging: true });
 
 function sleep(ms) {
     return new Promise((res, rej) => {
